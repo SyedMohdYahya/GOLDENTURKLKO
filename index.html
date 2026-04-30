@@ -9,6 +9,7 @@
 
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 
   :root {
     --gold: #C9A84C;
@@ -734,8 +735,8 @@
     .footer-top { grid-template-columns: 1fr; gap: 40px; }
     .footer-bottom { flex-direction: column; gap: 20px; text-align: center; }
 
-    .about-img-frame { aspect-ratio: 3/4; }
-    .facilities-visual-frame { aspect-ratio: 4/3 !important; }
+    .about-img-frame { aspect-ratio: 4/3; }
+    .facilities-visual-frame { aspect-ratio: 16/10 !important; }
     .about-field-penalty-box { left: 12%; right: 12%; height: 16%; }
     .about-field-overlay::after { width: 60px; height: 60px; }
     
