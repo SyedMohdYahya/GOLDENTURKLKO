@@ -32,6 +32,7 @@
     width: 100%;
     position: relative;
     scroll-behavior: smooth;
+    scroll-padding-top: 100px; /* Fixes the jumpy scroll bounce */
     -webkit-overflow-scrolling: touch;
     -webkit-tap-highlight-color: transparent;
   }
@@ -842,6 +843,16 @@
     color: var(--gold);
     font-size: 14px;
   }
+  .mobile-nav-close {
+    position: absolute;
+    top: 32px; right: 32px;
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 32px;
+    cursor: pointer;
+    z-index: 2600;
+  }
 </style>
 </head>
 <body>
@@ -909,6 +920,7 @@
 
 <!-- MOBILE NAV OVERLAY -->
 <div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="menuClose">✕</button>
   <a href="#about">About</a>
   <a href="#programs">Sports</a>
   <a href="#facilities">Facilities</a>
@@ -1172,28 +1184,34 @@
 
   // Mobile Menu Logic
   const menuToggle = document.getElementById('menuToggle');
+  const menuClose = document.getElementById('menuClose');
   const bottomMenuTrigger = document.getElementById('bottomMenuTrigger');
   const mobileNav = document.getElementById('mobileNav');
   const mobileLinks = mobileNav.querySelectorAll('a');
 
+  const openMenu = () => {
+    mobileNav.classList.add('active');
+    menuToggle.classList.add('active');
+    mobileLinks.forEach((link, i) => { link.style.transitionDelay = `${0.2 + i * 0.1}s`; });
+  };
+
+  const closeMenu = () => {
+    mobileNav.classList.remove('active');
+    menuToggle.classList.remove('active');
+    mobileLinks.forEach(link => link.style.transitionDelay = '0s');
+  };
+
   const toggleMenu = () => {
-    const isActive = mobileNav.classList.toggle('active');
-    menuToggle.classList.toggle('active');
-    if (isActive) {
-      mobileLinks.forEach((link, i) => { link.style.transitionDelay = `${0.2 + i * 0.1}s`; });
-    } else {
-      mobileLinks.forEach(link => link.style.transitionDelay = '0s');
-    }
+    if (mobileNav.classList.contains('active')) closeMenu();
+    else openMenu();
   };
 
   menuToggle.addEventListener('click', toggleMenu);
+  if (menuClose) menuClose.addEventListener('click', closeMenu);
   if (bottomMenuTrigger) bottomMenuTrigger.addEventListener('click', toggleMenu);
 
   mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      mobileNav.classList.remove('active');
-      menuToggle.classList.remove('active');
-    });
+    link.addEventListener('click', closeMenu);
   });
 
   function animateFollower() {
