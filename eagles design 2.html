@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eagles Tennis Academy — Olaya, Riyadh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#D4A843;--gold2:#F0C96A;--black:#080808;--ink:#0E0E0E;--ink2:#161616;--ink3:#202020;--ink4:#2A2A2A;
+  --white:#FFFFFF;--offwhite:#F2EEE6;--gray:#666;--gray2:#999;--green:#1D4A2B;--green2:#2A6340;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--black);color:var(--offwhite);overflow-x:hidden;cursor:none}
+#cur{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+#cur2{position:fixed;width:32px;height:32px;border:1.5px solid rgba(212,168,67,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%)}
+#cur.big{width:14px;height:14px}
+nav{position:fixed;top:0;left:0;right:0;z-index:400;display:flex;align-items:center;justify-content:space-between;padding:24px 56px;transition:all .4s}
+nav.stuck{padding:14px 56px;background:rgba(8,8,8,.94);backdrop-filter:blur(18px);border-bottom:1px solid rgba(212,168,67,.12)}
+.nlogo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.nlogo-emblem{width:38px;height:38px}
+.nlogo-words{display:flex;flex-direction:column;line-height:1}
+.nlogo-words .top{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--gold);letter-spacing:.12em}
+.nlogo-words .bot{font-size:8px;letter-spacing:.4em;text-transform:uppercase;color:var(--gray2);margin-top:2px}
+.nlinks{display:flex;gap:36px;list-style:none}
+.nlinks a{text-decoration:none;font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:rgba(242,238,230,.5);transition:color .25s}
+.nlinks a:hover{color:var(--gold)}
+.n-enroll{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:11px 28px;background:var(--gold);color:var(--black);text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:background .25s;cursor:none}
+.n-enroll:hover{background:var(--gold2)}
+.n-burger{display:none;flex-direction:column;gap:5px;cursor:none}
+.n-burger span{width:22px;height:1.5px;background:var(--offwhite)}
+#hero{position:relative;height:100vh;min-height:680px;overflow:hidden;display:flex;align-items:flex-end}
+.hero-img{position:absolute;inset:0}
+.hero-img img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:brightness(.45)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,.3) 55%,rgba(8,8,8,.1) 100%)}
+.hero-overlay2{position:absolute;inset:0;background:linear-gradient(100deg,rgba(8,8,8,.75) 0%,transparent 60%)}
+.hero-tag{position:absolute;top:120px;right:56px;display:flex;flex-direction:column;align-items:flex-end;gap:6px;opacity:0;animation:fup .8s ease 1.2s forwards}
+.hero-tag .ht-num{font-family:'Bebas Neue',sans-serif;font-size:110px;line-height:1;color:rgba(212,168,67,.1);letter-spacing:-.02em}
+.hero-tag .ht-label{font-size:8px;letter-spacing:.45em;text-transform:uppercase;color:var(--gold)}
+.hero-inner{position:relative;z-index:2;padding:0 56px 80px;width:100%}
+.hero-chip{display:inline-flex;align-items:center;gap:10px;background:rgba(212,168,67,.1);border:1px solid rgba(212,168,67,.3);padding:7px 16px;margin-bottom:28px;opacity:0;animation:fup .7s ease .3s forwards}
+.hero-chip span{font-size:9px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold)}
+.hero-chip-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:blink 1.4s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,12vw,160px);line-height:.9;letter-spacing:.02em;margin-bottom:28px;opacity:0;animation:fup .9s ease .5s forwards}
+.hero-h1 .g{color:var(--gold);display:inline-block;transform:skewX(-2deg)}
+.hero-h1 .out{-webkit-text-stroke:1px rgba(242,238,230,.2);color:transparent}
+.hero-sub{font-size:13px;font-weight:300;line-height:1.85;color:rgba(242,238,230,.55);max-width:380px;margin-bottom:44px;opacity:0;animation:fup .8s ease .75s forwards}
+.hero-btns{display:flex;align-items:center;gap:28px;opacity:0;animation:fup .8s ease .95s forwards}
+.btn-gold{display:inline-flex;align-items:center;gap:10px;font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;padding:16px 36px;background:var(--gold);color:var(--black);text-decoration:none;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);transition:background .25s;cursor:none}
+.btn-gold:hover{background:var(--gold2)}
+.btn-line{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,238,230,.6);text-decoration:none;display:flex;align-items:center;gap:10px;transition:color .25s}
+.btn-line:hover{color:var(--gold)}
+.hero-stats{position:absolute;right:56px;bottom:80px;display:flex;gap:0;opacity:0;animation:fup .8s ease 1.1s forwards}
+.hstat{padding:18px 24px;border:1px solid rgba(212,168,67,.18);background:rgba(8,8,8,.75);backdrop-filter:blur(10px);text-align:center;border-right:none}
+.hstat:last-child{border-right:1px solid rgba(212,168,67,.18)}
+.hstat-n{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold);line-height:1}
+.hstat-l{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray2);margin-top:3px}
+@keyframes fup{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.ticker{overflow:hidden;border-top:1px solid rgba(212,168,67,.18);border-bottom:1px solid rgba(212,168,67,.18);background:rgba(212,168,67,.04);padding:13px 0}
+.ticker-inner{display:flex;gap:52px;animation:tick 26s linear infinite;white-space:nowrap}
+.titem{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.titem span{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,238,230,.4)}
+.titem svg{color:var(--gold);opacity:.5;flex-shrink:0}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.wrap{max-width:1360px;margin:0 auto;padding:0 56px}
+.sec{padding:110px 0}
+.sec-tag{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.sec-tag-line{width:32px;height:2px;background:var(--gold)}
+.sec-tag span{font-size:9px;font-weight:600;letter-spacing:.4em;text-transform:uppercase;color:var(--gold)}
+.sec-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,6vw,80px);line-height:.95;letter-spacing:.02em}
+.sec-h .g{color:var(--gold)}.sec-h .sk{display:inline-block;transform:skewX(-2deg)}
+#about{background:var(--ink)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-img-wrap{position:relative}
+.about-img-frame{overflow:hidden;position:relative}
+.about-img-frame img{width:100%;height:560px;object-fit:cover;display:block;filter:brightness(.8);transition:transform .6s}
+.about-img-frame:hover img{transform:scale(1.03)}
+.about-img-label{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(8,8,8,.95) 0%,transparent 100%);padding:36px 28px 24px}
+.about-img-label .ln{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.06em}
+.about-img-label .ls{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+.corner-tl{position:absolute;top:-10px;right:-10px;width:56px;height:56px;border-top:2.5px solid var(--gold);border-right:2.5px solid var(--gold);pointer-events:none}
+.corner-br{position:absolute;bottom:-10px;left:-10px;width:56px;height:56px;border-bottom:2.5px solid var(--gold);border-left:2.5px solid var(--gold);pointer-events:none}
+.about-body{font-size:14px;font-weight:300;line-height:1.85;color:rgba(242,238,230,.5);margin:20px 0 36px}
+.pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:44px}
+.pill{font-size:9px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:8px 16px;border:1px solid rgba(212,168,67,.3);color:var(--gold)}
+.arow{display:flex;gap:0;border-top:1px solid rgba(212,168,67,.15)}
+.astat{flex:1;padding-top:28px}
+.astat+.astat{border-left:1px solid rgba(212,168,67,.15);padding-left:24px}
+.astat-n{font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--gold);line-height:1}
+.astat-l{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray2);margin-top:6px}
+.gallery-strip{display:grid;grid-template-columns:2fr 1fr 1fr;height:400px;gap:3px}
+.gallery-strip2{display:grid;grid-template-columns:1fr 1fr 2fr;height:360px;gap:3px;margin-top:3px}
+.gs{overflow:hidden;position:relative;cursor:none}
+.gs img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.65);transition:transform .5s,filter .5s}
+.gs:hover img{transform:scale(1.04);filter:brightness(.8)}
+.gs-lbl{position:absolute;bottom:0;left:0;right:0;padding:18px 20px;background:linear-gradient(to top,rgba(8,8,8,.85) 0%,transparent 100%);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(242,238,230,.7);transform:translateY(4px);opacity:.7;transition:all .3s}
+.gs:hover .gs-lbl{transform:translateY(0);opacity:1}
+#people{background:var(--ink)}
+.people-intro{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:72px}
+.people-sub{font-size:14px;font-weight:300;line-height:1.8;color:rgba(242,238,230,.4)}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
+.pcard{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--ink3);cursor:none}
+.pcard img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;filter:grayscale(15%) brightness(.7);transition:transform .5s,filter .5s}
+.pcard:hover img{transform:scale(1.05);filter:grayscale(0%) brightness(.82)}
+.pstripe{position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold);transform:scaleY(0);transform-origin:top;transition:transform .4s}
+.pcard:hover .pstripe{transform:scaleY(1)}
+.pinfo{position:absolute;bottom:0;left:0;right:0;padding:24px 20px 20px;background:linear-gradient(to top,rgba(8,8,8,.97) 0%,rgba(8,8,8,.6) 60%,transparent 100%);transform:translateY(10px);transition:transform .35s}
+.pcard:hover .pinfo{transform:translateY(0)}
+.prole{font-size:8px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.pname{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.05em}
+.pbio{font-size:11px;line-height:1.6;color:rgba(242,238,230,.45);margin-top:7px;opacity:0;transition:opacity .35s .05s}
+.pcard:hover .pbio{opacity:1}
+#reviews{background:var(--black)}
+.rtrack{display:flex;gap:20px;overflow-x:auto;scrollbar-width:none;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.rtrack::-webkit-scrollbar{display:none}
+.rcard{flex-shrink:0;width:320px;background:var(--ink2);border:1px solid rgba(212,168,67,.1);padding:28px 24px;position:relative}
+.rcard::before{content:'"';font-family:'Bebas Neue',sans-serif;font-size:72px;color:var(--gold);opacity:.1;position:absolute;top:8px;left:16px;line-height:1;pointer-events:none}
+.rstars{display:flex;gap:4px;margin-bottom:16px}
+.rstars svg{width:13px;height:13px;fill:var(--gold)}
+.rtext{font-size:12px;font-weight:300;line-height:1.75;color:rgba(242,238,230,.6);margin-bottom:20px}
+.rauthor{display:flex;align-items:center;gap:10px}
+.ravatar{width:34px;height:34px;border-radius:50%;object-fit:cover}
+.rname{font-size:11px;font-weight:600;color:var(--offwhite)}
+.rdate{font-size:9px;color:var(--gray2)}
+.rrating-big{display:flex;align-items:center;gap:20px;margin-bottom:44px}
+.rnum{font-family:'Bebas Neue',sans-serif;font-size:72px;color:var(--gold);line-height:1}
+.rright{display:flex;flex-direction:column;gap:8px}
+.rright .sts{display:flex;gap:5px}
+.rright .sts svg{width:18px;height:18px;fill:var(--gold)}
+.rlabel{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray2)}
+#location{background:var(--ink2)}
+.lgrid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.lmap{position:relative;height:520px;overflow:hidden;background:var(--ink3)}
+.msvg{position:absolute;inset:0;width:100%;height:100%}
+.mpin{position:absolute;top:46%;left:53%;transform:translate(-50%,-50%)}
+.pr1{width:72px;height:72px;border-radius:50%;border:1.5px solid rgba(212,168,67,.3);display:flex;align-items:center;justify-content:center;animation:pr 2.2s ease infinite}
+.pr2{width:42px;height:42px;border-radius:50%;border:1.5px solid rgba(212,168,67,.5);display:flex;align-items:center;justify-content:center}
+.pd{width:14px;height:14px;background:var(--gold);border-radius:50%}
+@keyframes pr{0%,100%{box-shadow:0 0 0 0 rgba(212,168,67,.3)}50%{box-shadow:0 0 0 16px rgba(212,168,67,0)}}
+.mcard{position:absolute;bottom:24px;left:24px;background:rgba(8,8,8,.92);border:1px solid rgba(212,168,67,.25);padding:20px 22px;backdrop-filter:blur(12px)}
+.mcard .mn{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:.06em;margin-bottom:4px}
+.mcard .ma{font-size:10px;color:var(--gold);letter-spacing:.08em}
+.mgdir{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-size:9px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--black);background:var(--gold);padding:9px 18px;text-decoration:none;transition:background .25s;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%)}
+.mgdir:hover{background:var(--gold2)}
+.linfo .sec-h{margin-bottom:32px}
+.lfact{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid rgba(242,238,230,.07)}
+.licon{width:36px;height:36px;flex-shrink:0;border:1px solid rgba(212,168,67,.3);display:flex;align-items:center;justify-content:center;color:var(--gold)}
+.ltx .lfl{font-size:8px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.ltx .lfv{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:600;letter-spacing:.04em}
+.ltx .lfs{font-size:11px;color:var(--gray2);margin-top:3px}
+.lbtns{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.btn-outline{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:14px 28px;border:1px solid rgba(212,168,67,.35);color:var(--gold);text-decoration:none;display:inline-flex;align-items:center;gap:8px;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transition:all .25s}
+.btn-outline:hover{border-color:var(--gold);background:rgba(212,168,67,.08)}
+#ctabanner{position:relative;overflow:hidden}
+.ctabg{position:absolute;inset:0}
+.ctabg img{width:100%;height:100%;object-fit:cover;filter:brightness(.18)}
+.ctabg-ov{position:absolute;inset:0;background:linear-gradient(100deg,rgba(8,8,8,.92) 35%,rgba(8,8,8,.55) 100%)}
+.cta-inner{position:relative;z-index:2;padding:120px 56px;max-width:1360px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.cta-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,7vw,96px);line-height:.9;letter-spacing:.02em;margin-bottom:24px}
+.cta-h .g{color:var(--gold)}
+.cta-body{font-size:14px;font-weight:300;line-height:1.8;color:rgba(242,238,230,.45);margin-bottom:36px}
+.cta-cards{display:flex;flex-direction:column;gap:16px}
+.cc{background:rgba(212,168,67,.07);border:1px solid rgba(212,168,67,.18);padding:20px 24px;display:flex;align-items:center;gap:16px;transition:background .3s;cursor:none}
+.cc:hover{background:rgba(212,168,67,.13)}
+.ccicon{color:var(--gold);flex-shrink:0}
+.ccl{font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.ccv{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:600;letter-spacing:.04em}
+footer{background:var(--ink);border-top:1px solid rgba(212,168,67,.1)}
+.ftop{max-width:1360px;margin:0 auto;padding:68px 56px 44px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:56px}
+.fbrand p{font-size:12px;font-weight:300;line-height:1.8;color:rgba(242,238,230,.4);margin:18px 0 24px;max-width:240px}
+.fsocial{display:flex;gap:10px}
+.fsocial a{width:32px;height:32px;border:1px solid rgba(212,168,67,.22);display:flex;align-items:center;justify-content:center;color:var(--gray2);transition:all .25s;cursor:none;text-decoration:none}
+.fsocial a:hover{border-color:var(--gold);color:var(--gold)}
+.fcol h5{font-size:9px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.fcol a{text-decoration:none;font-size:12px;color:rgba(242,238,230,.38);transition:color .25s;cursor:none}
+.fcol a:hover{color:var(--gold)}
+.fbar{border-top:1px solid rgba(242,238,230,.06);padding:20px 56px;display:flex;justify-content:space-between;align-items:center}
+.fbar p{font-size:10px;color:rgba(242,238,230,.18)}
+.fbar .ig{font-size:10px;color:rgba(212,168,67,.45)}
+.sr{opacity:0;transform:translateY(32px);transition:opacity .75s ease,transform .75s ease}
+.sr.in{opacity:1;transform:none}
+.sr-d1{transition-delay:.1s}.sr-d2{transition-delay:.2s}.sr-d3{transition-delay:.3s}
+@media(max-width:1024px){
+  nav{padding:20px 28px}nav.stuck{padding:14px 28px}.nlinks,.n-enroll{display:none}.n-burger{display:flex}
+  .wrap{padding:0 28px}.about-grid,.lgrid,.people-intro,.cta-inner{grid-template-columns:1fr;gap:44px}
+  .pgrid{grid-template-columns:1fr 1fr}.hero-stats{display:none}
+  .gallery-strip,.gallery-strip2{grid-template-columns:1fr 1fr;height:auto}
+  .gallery-strip .gs:first-child{grid-column:span 2;height:280px}
+  .gallery-strip .gs:not(:first-child){height:200px}
+  .gallery-strip2 .gs:last-child{grid-column:span 2;height:280px}
+  .gallery-strip2 .gs:not(:last-child){height:200px}
+  .ftop{grid-template-columns:1fr 1fr;gap:36px}.cta-inner{padding:80px 28px}
+}
+@media(max-width:640px){
+  .hero-h1{font-size:72px}.pgrid{grid-template-columns:1fr 1fr}
+  .ftop{grid-template-columns:1fr;gap:32px}.fbar{flex-direction:column;gap:8px;padding:18px 28px;text-align:center}
+  .hero-inner{padding:0 28px 60px}.hero-tag{right:28px}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur2"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nlogo">
+    <svg class="nlogo-emblem" viewBox="0 0 38 38" fill="none">
+      <polygon points="19,3 35,15 29,34 9,34 3,15" fill="none" stroke="#D4A843" stroke-width="1.2"/>
+      <polygon points="19,9 28,17 25,28 13,28 10,17" fill="rgba(212,168,67,.1)"/>
+      <circle cx="19" cy="19" r="4" fill="#D4A843"/>
+      <line x1="19" y1="3" x2="19" y2="34" stroke="#D4A843" stroke-width=".5" opacity=".4"/>
+    </svg>
+    <div class="nlogo-words"><span class="top">Eagles</span><span class="bot">Tennis Academy</span></div>
+  </a>
+  <ul class="nlinks">
+    <li><a href="#about">Academy</a></li>
+    <li><a href="#people">Team</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#location">Location</a></li>
+  </ul>
+  <a href="#location" class="n-enroll">Find Us</a>
+  <div class="n-burger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-img"><img src="https://images.unsplash.com/photo-1622163642998-1ea32b0bbc67?w=1800&q=80" alt="Tennis court"></div>
+  <div class="hero-overlay"></div><div class="hero-overlay2"></div>
+  <div class="hero-tag">
+    <div class="ht-num">01</div>
+    <div class="ht-label">Olaya · Riyadh</div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-chip"><div class="hero-chip-dot"></div><span>Eagles Tennis Academy — Olaya, Riyadh</span></div>
+    <h1 class="hero-h1">RISE<br><span class="out">TO THE</span><br><span class="g">TOP</span></h1>
+    <p class="hero-sub">Olaya's premier tennis destination — professional courts, elite coaching, and a community built around the love of the game.</p>
+    <div class="hero-btns">
+      <a href="#location" class="btn-gold"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Find the Academy</a>
+      <a href="#about" class="btn-line"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>Discover More</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n">4.8★</div><div class="hstat-l">Google Rating</div></div>
+    <div class="hstat"><div class="hstat-n">Olaya</div><div class="hstat-l">Riyadh, KSA</div></div>
+    <div class="hstat"><div class="hstat-n">@eagles.tennis.sa</div><div class="hstat-l">Instagram</div></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="tk"></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="sec">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-img-wrap sr">
+        <div class="about-img-frame">
+          <img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=900&q=80" alt="Tennis court Olaya">
+          <div class="about-img-label"><div class="ln">Eagles Tennis Academy</div><div class="ls">Olaya · Riyadh, Saudi Arabia</div></div>
+        </div>
+        <div class="corner-tl"></div><div class="corner-br"></div>
+      </div>
+      <div class="sr sr-d2">
+        <div class="sec-tag"><div class="sec-tag-line"></div><span>The Academy</span></div>
+        <h2 class="sec-h">WHERE <span class="g sk">CHAMPIONS</span><br>ARE FORGED</h2>
+        <p class="about-body">Eagles Tennis Academy is Olaya's dedicated tennis training destination — a space built for players serious about their game, from beginners discovering the sport to seasoned competitors pushing their limits.</p>
+        <div class="pills">
+          <div class="pill">Olaya, Riyadh</div><div class="pill">All Skill Levels</div><div class="pill">All Ages</div><div class="pill">Professional Courts</div>
+        </div>
+        <div class="arow">
+          <div class="astat"><div class="astat-n">4.8</div><div class="astat-l">Google Stars</div></div>
+          <div class="astat"><div class="astat-n">KSA</div><div class="astat-l">Based in Riyadh</div></div>
+          <div class="astat"><div class="astat-n">🎾</div><div class="astat-l">Tennis Academy</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY 1 -->
+<div class="gallery-strip sr">
+  <div class="gs"><img src="https://images.unsplash.com/photo-1622163642998-1ea32b0bbc67?w=1000&q=80" alt="Match play"><div class="gs-lbl">Match Play</div></div>
+  <div class="gs"><img src="https://images.unsplash.com/photo-1531315630201-bb15abeb1653?w=600&q=80" alt="Serve"><div class="gs-lbl">Serve & Volley</div></div>
+  <div class="gs"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=600&q=80" alt="Training"><div class="gs-lbl">Training</div></div>
+</div>
+<div class="gallery-strip2 sr sr-d1">
+  <div class="gs"><img src="https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?w=600&q=80" alt="Court"><div class="gs-lbl">The Courts</div></div>
+  <div class="gs"><img src="https://images.unsplash.com/photo-1516478177764-9fe5bd7e9717?w=600&q=80" alt="Junior tennis"><div class="gs-lbl">Junior Program</div></div>
+  <div class="gs"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=900&q=80" alt="Fitness"><div class="gs-lbl">Fitness & Conditioning</div></div>
+</div>
+
+<!-- PEOPLE -->
+<section id="people" class="sec">
+  <div class="wrap">
+    <div class="people-intro">
+      <div class="sr"><div class="sec-tag"><div class="sec-tag-line"></div><span>Our Team</span></div><h2 class="sec-h">COACHING<br><span class="g sk">EXCELLENCE</span></h2></div>
+      <p class="people-sub sr sr-d2">Our professional coaching team brings expert-level training to every session — dedicated to developing players of all ages and abilities.</p>
+    </div>
+    <div class="pgrid sr">
+      <div class="pcard"><div class="pstripe"></div>
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80" alt="Coach">
+        <div class="pinfo"><div class="prole">Head Coach</div><div class="pname">Senior Coach</div><div class="pbio">Lead trainer driving the academy's coaching standards and player development at Eagles, Olaya.</div></div>
+      </div>
+      <div class="pcard"><div class="pstripe"></div>
+        <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=500&q=80" alt="Coach">
+        <div class="pinfo"><div class="prole">Tennis Coach</div><div class="pname">Academy Coach</div><div class="pbio">Specialising in technical development and match preparation for competitive players.</div></div>
+      </div>
+      <div class="pcard"><div class="pstripe"></div>
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&q=80" alt="Coach">
+        <div class="pinfo"><div class="prole">Junior Coach</div><div class="pname">Junior Specialist</div><div class="pbio">Focused on youth development — introducing children to tennis through fun, structured training.</div></div>
+      </div>
+      <div class="pcard"><div class="pstripe"></div>
+        <img src="https://images.unsplash.com/photo-1534308143481-c55f00be8bd7?w=500&q=80" alt="Coach">
+        <div class="pinfo"><div class="prole">S&C Coach</div><div class="pname">Fitness Coach</div><div class="pbio">Sport-specific strength and conditioning to maximise on-court performance for all levels.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="sec" style="background:var(--ink2)">
+  <div class="wrap">
+    <div class="sr" style="margin-bottom:56px">
+      <div class="sec-tag"><div class="sec-tag-line"></div><span>Google Reviews</span></div>
+      <div class="rrating-big">
+        <div class="rnum">4.8</div>
+        <div class="rright">
+          <div class="sts">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div class="rlabel">Based on Google Maps Reviews</div>
+        </div>
+      </div>
+    </div>
+    <div class="rtrack sr">
+      <div class="rcard">
+        <div class="rstars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <p class="rtext">Excellent academy in Olaya! The coaches are very professional and the courts are in great condition. Highly recommend for anyone wanting to improve their tennis.</p>
+        <div class="rauthor"><img class="ravatar" src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=80&q=80" alt=""><div><div class="rname">Mohammed A.</div><div class="rdate">Google Review</div></div></div>
+      </div>
+      <div class="rcard">
+        <div class="rstars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <p class="rtext">My kids love it here. The junior coaching is excellent and the environment is very welcoming. Best tennis academy in the Olaya area without question.</p>
+        <div class="rauthor"><img class="ravatar" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&q=80" alt=""><div><div class="rname">Sarah K.</div><div class="rdate">Google Review</div></div></div>
+      </div>
+      <div class="rcard">
+        <div class="rstars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <p class="rtext">Great location in Olaya — very convenient. The coaching staff is top-notch, always focused on proper technique. I've improved tremendously in just a few months.</p>
+        <div class="rauthor"><img class="ravatar" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=80&q=80" alt=""><div><div class="rname">Faisal R.</div><div class="rdate">Google Review</div></div></div>
+      </div>
+      <div class="rcard">
+        <div class="rstars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24" opacity=".3"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <p class="rtext">Solid training sessions and good facilities. The coaches are patient and know how to adapt to different skill levels. Happy I found this place in Riyadh.</p>
+        <div class="rauthor"><img class="ravatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=80" alt=""><div><div class="rname">Omar J.</div><div class="rdate">Google Review</div></div></div>
+      </div>
+      <div class="rcard">
+        <div class="rstars"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <p class="rtext">Five stars for the coaches' dedication. My daughter started with zero experience and is now competing confidently. Eagles Academy in Olaya has been a game-changer.</p>
+        <div class="rauthor"><img class="ravatar" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=80" alt=""><div><div class="rname">Lina M.</div><div class="rdate">Google Review</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location" class="sec">
+  <div class="wrap">
+    <div class="lgrid">
+      <div class="sr">
+        <div class="sec-tag"><div class="sec-tag-line"></div><span>Find Us</span></div>
+        <h2 class="sec-h" style="margin-bottom:32px">VISIT THE<br><span class="g sk">ACADEMY</span></h2>
+        <div class="lfact">
+          <div class="licon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg></div>
+          <div class="ltx"><div class="lfl">Location</div><div class="lfv">Eagles Tennis Academy — Olaya</div><div class="lfs">Olaya District, Riyadh, Saudi Arabia</div></div>
+        </div>
+        <div class="lfact">
+          <div class="licon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></div>
+          <div class="ltx"><div class="lfl">Instagram</div><div class="lfv">@eagles.tennis.sa</div><div class="lfs">Follow for updates, news & academy content</div></div>
+        </div>
+        <div class="lfact">
+          <div class="licon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <div class="ltx"><div class="lfl">Google Rating</div><div class="lfv">4.8 Stars ★★★★★</div><div class="lfs">Rated by members on Google Maps</div></div>
+        </div>
+        <div class="lbtns">
+          <a href="https://www.google.com/maps/place/Eagles+tennis+Academy+Olaya/@24.6837332,46.6981155,17z" target="_blank" class="btn-gold" style="font-size:10px;padding:14px 28px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            Get Directions
+          </a>
+          <a href="https://www.instagram.com/eagles.tennis.sa/" target="_blank" class="btn-outline">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+            Follow Us
+          </a>
+        </div>
+      </div>
+      <div class="lmap sr sr-d2">
+        <svg class="msvg" viewBox="0 0 560 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="560" height="520" fill="#161616"/>
+          <defs><pattern id="mg" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#D4A843" stroke-width=".3" opacity=".2"/></pattern></defs>
+          <rect width="560" height="520" fill="url(#mg)"/>
+          <rect x="0" y="196" width="560" height="28" fill="#252525"/>
+          <line x1="0" y1="210" x2="560" y2="210" stroke="#D4A843" stroke-width=".6" stroke-dasharray="12 8" opacity=".3"/>
+          <rect x="178" y="0" width="28" height="520" fill="#252525"/>
+          <line x1="192" y1="0" x2="192" y2="520" stroke="#D4A843" stroke-width=".6" stroke-dasharray="12 8" opacity=".3"/>
+          <rect x="358" y="0" width="22" height="520" fill="#1E1E1E"/>
+          <rect x="0" y="356" width="560" height="18" fill="#1E1E1E"/>
+          <rect x="10" y="10" width="158" height="176" fill="#191919" rx="2"/>
+          <rect x="216" y="10" width="132" height="176" fill="#191919" rx="2"/>
+          <rect x="388" y="10" width="162" height="176" fill="#191919" rx="2"/>
+          <rect x="10" y="234" width="158" height="112" fill="#191919" rx="2"/>
+          <rect x="10" y="384" width="158" height="126" fill="#191919" rx="2"/>
+          <rect x="388" y="234" width="162" height="112" fill="#191919" rx="2"/>
+          <rect x="388" y="384" width="162" height="126" fill="#191919" rx="2"/>
+          <!-- Academy block highlighted -->
+          <rect x="216" y="234" width="132" height="112" fill="#1D4A2B" rx="2" opacity=".85"/>
+          <rect x="218" y="236" width="128" height="108" fill="none" stroke="#D4A843" stroke-width="1.5" rx="1" opacity=".7"/>
+          <rect x="228" y="248" width="52" height="34" fill="none" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+          <line x1="228" y1="265" x2="280" y2="265" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+          <line x1="254" y1="248" x2="254" y2="282" stroke="rgba(255,255,255,.12)" stroke-width=".5"/>
+          <text x="280" y="192" font-size="7" fill="#D4A843" opacity=".5" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="2">OLAYA STREET</text>
+          <text x="136" y="300" font-size="6" fill="#D4A843" opacity=".4" text-anchor="middle" font-family="Inter,sans-serif" letter-spacing="1" transform="rotate(-90,136,300)">KING FAHD ROAD</text>
+        </svg>
+        <div class="mpin"><div class="pr1"><div class="pr2"><div class="pd"></div></div></div></div>
+        <div class="mcard">
+          <div class="mn">Eagles Tennis Academy</div>
+          <div class="ma">Olaya District · Riyadh, KSA · 4.8 ★</div>
+          <a href="https://www.google.com/maps/place/Eagles+tennis+Academy+Olaya/@24.6837332,46.6981155,17z" target="_blank" class="mgdir">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+            Open in Google Maps
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="ctabanner">
+  <div class="ctabg"><img src="https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=1600&q=80" alt=""><div class="ctabg-ov"></div></div>
+  <div class="cta-inner">
+    <div class="sr">
+      <h2 class="cta-h">READY TO<br><span class="g">PLAY?</span></h2>
+      <p class="cta-body">Come join the Eagles community in the heart of Olaya, Riyadh. Find us on Google Maps or reach out via Instagram to get started today.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <a href="https://www.google.com/maps/place/Eagles+tennis+Academy+Olaya/@24.6837332,46.6981155,17z" target="_blank" class="btn-gold"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Find Us on Maps</a>
+        <a href="https://www.instagram.com/eagles.tennis.sa/" target="_blank" class="btn-outline" style="color:var(--offwhite);border-color:rgba(242,238,230,.25)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>Instagram</a>
+      </div>
+    </div>
+    <div class="cta-cards sr sr-d2">
+      <div class="cc"><div class="ccicon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/></svg></div><div><div class="ccl">Location</div><div class="ccv">Olaya District, Riyadh</div></div></div>
+      <div class="cc"><div class="ccicon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div><div class="ccl">Google Rating</div><div class="ccv">4.8 Stars ★★★★★</div></div></div>
+      <div class="cc"><div class="ccicon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></div><div><div class="ccl">Instagram</div><div class="ccv">@eagles.tennis.sa</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ftop">
+    <div class="fbrand">
+      <a href="#" class="nlogo">
+        <svg class="nlogo-emblem" viewBox="0 0 38 38" fill="none"><polygon points="19,3 35,15 29,34 9,34 3,15" fill="none" stroke="#D4A843" stroke-width="1.2"/><polygon points="19,9 28,17 25,28 13,28 10,17" fill="rgba(212,168,67,.1)"/><circle cx="19" cy="19" r="4" fill="#D4A843"/></svg>
+        <div class="nlogo-words"><span class="top">Eagles</span><span class="bot">Tennis Academy</span></div>
+      </a>
+      <p>Olaya's premier tennis academy — located in the heart of Riyadh's Olaya district. Find us on Google Maps and follow @eagles.tennis.sa on Instagram.</p>
+      <div class="fsocial">
+        <a href="https://www.instagram.com/eagles.tennis.sa/" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
+        <a href="https://www.google.com/maps/place/Eagles+tennis+Academy+Olaya/@24.6837332,46.6981155,17z" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></a>
+      </div>
+    </div>
+    <div class="fcol"><h5>Academy</h5><ul><li><a href="#about">About Eagles</a></li><li><a href="#people">Our Coaches</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#location">Location</a></li></ul></div>
+    <div class="fcol"><h5>Training</h5><ul><li><a href="#about">Junior Tennis</a></li><li><a href="#about">Adult Tennis</a></li><li><a href="#about">Private Coaching</a></li><li><a href="#about">Group Sessions</a></li></ul></div>
+    <div class="fcol"><h5>Connect</h5><ul><li><a href="https://www.instagram.com/eagles.tennis.sa/" target="_blank">@eagles.tennis.sa</a></li><li><a href="https://www.google.com/maps/place/Eagles+tennis+Academy+Olaya/@24.6837332,46.6981155,17z" target="_blank">Google Maps</a></li><li><a href="#location">Olaya, Riyadh KSA</a></li></ul></div>
+  </div>
+  <div class="fbar">
+    <p>© 2025 Eagles Tennis Academy — Olaya, Riyadh. All rights reserved.</p>
+    <span class="ig">@eagles.tennis.sa</span>
+  </div>
+</footer>
+
+<script>
+// Cursor
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+let mx=0,my=0,fx=0,fy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function loop(){fx+=(mx-fx)*.1;fy+=(my-fy)*.1;cur2.style.left=fx+'px';cur2.style.top=fy+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('a,button,.pcard,.gs,.rcard,.cc').forEach(el=>{el.addEventListener('mouseenter',()=>cur.classList.add('big'));el.addEventListener('mouseleave',()=>cur.classList.remove('big'))});
+
+// Nav
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>60));
+
+// Ticker
+const items=[
+  {icon:'<path d="M12 2C8.686 2 6 4.686 6 8c0 5.25 6 14 6 14s6-8.75 6-14c0-3.314-2.686-6-6-6zm0 8a2 2 0 110-4 2 2 0 010 4z"/>',fill:true,label:'Olaya District, Riyadh'},
+  {icon:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',fill:false,label:'Professional Courts'},
+  {icon:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>',fill:false,label:'All Ages Welcome'},
+  {icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',fill:false,label:'4.8 Stars on Google'},
+  {icon:'<rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/>',fill:false,label:'@eagles.tennis.sa'},
+  {icon:'<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>',fill:false,label:'Tennis Academy'},
+];
+const tk=document.getElementById('tk');
+const html=[...items,...items].map(it=>`<div class="titem"><svg width="13" height="13" viewBox="0 0 24 24" fill="${it.fill?'currentColor':'none'}" stroke="currentColor" stroke-width="2">${it.icon}</svg><span>${it.label}</span></div>`).join('');
+tk.innerHTML=html;
+
+// Scroll reveal
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.1});
+document.querySelectorAll('.sr').forEach(el=>obs.observe(el));
+
+// Mobile nav
+function toggleNav(){
+  const ul=document.querySelector('.nlinks'),cta=document.querySelector('.n-enroll'),isOpen=ul.style.display==='flex';
+  ul.style.cssText=isOpen?'':'display:flex;flex-direction:column;position:fixed;top:62px;left:0;right:0;background:rgba(8,8,8,.98);padding:28px;gap:24px;border-bottom:1px solid rgba(212,168,67,.15);z-index:399';
+  if(cta)cta.style.display=isOpen?'':'block';
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}})});
+</script>
+</body>
+</html>

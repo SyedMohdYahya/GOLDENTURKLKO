@@ -1,0 +1,1956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eagles Tennis Academy — Olaya, Riyadh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Marcellus&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97E;
+    --gold-pale: #F5E8C0;
+    --dark: #0A0A0A;
+    --dark-2: #111111;
+    --dark-3: #1A1A1A;
+    --dark-4: #222222;
+    --cream: #F7F2E8;
+    --cream-2: #EDE5D4;
+    --white: #FFFFFF;
+    --gray: #888888;
+    --gray-light: #CCCCCC;
+    --green-court: #2D5A3D;
+    --green-light: #4A8A5E;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--cream);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-follower {
+    position: fixed;
+    width: 40px; height: 40px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease;
+    opacity: 0.5;
+  }
+  .cursor.hovered { width: 20px; height: 20px; }
+
+  /* Noise Texture Overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ─── NAVIGATION ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 500;
+    padding: 28px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.5s ease;
+  }
+  nav.scrolled {
+    padding: 18px 60px;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 44px; height: 44px;
+    position: relative;
+  }
+  .nav-logo-icon svg { width: 100%; height: 100%; }
+  .nav-logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .nav-logo-text .brand {
+    font-family: 'Marcellus', serif;
+    font-size: 16px;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .nav-logo-text .sub {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 3px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    cursor: none;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  .nav-cta:hover {
+    background: var(--gold);
+    color: var(--dark);
+  }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(45,90,61,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 20% 80%, rgba(201,168,76,0.08) 0%, transparent 50%),
+      linear-gradient(160deg, #0A0A0A 0%, #0F1A13 50%, #0A0A0A 100%);
+  }
+  .hero-court-lines {
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+  }
+  .hero-eyebrow span {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .hero-eyebrow-line {
+    width: 60px; height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(72px, 10vw, 140px);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.5s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero-title .line-indent {
+    padding-left: 180px;
+    display: block;
+  }
+  .hero-desc {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(247,242,232,0.6);
+    max-width: 420px;
+    margin-bottom: 56px;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+  }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1s forwards;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--dark);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 18px 48px;
+    border: none;
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--dark);
+    transform: translateX(-101%);
+    transition: transform 0.4s ease;
+  }
+  .btn-primary:hover { color: var(--gold); }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-ghost {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: gap 0.3s ease, color 0.3s;
+  }
+  .btn-ghost:hover { gap: 20px; color: var(--gold); }
+  .btn-ghost svg { width: 20px; height: 20px; }
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 60px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.4s forwards;
+  }
+  .hero-scroll span {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gray);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+  .scroll-line {
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  .hero-badge {
+    position: absolute;
+    right: 60px;
+    bottom: 60px;
+    width: 140px; height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.5s forwards;
+  }
+  .hero-badge-ring {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 50%;
+    animation: rotateSlow 20s linear infinite;
+  }
+  .hero-badge-ring::before {
+    content: '';
+    position: absolute;
+    top: -4px; left: 50%;
+    transform: translateX(-50%);
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  .hero-badge-inner {
+    text-align: center;
+    padding: 20px;
+  }
+  .hero-badge-inner .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .hero-badge-inner .label {
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 6px;
+    display: block;
+  }
+  @keyframes rotateSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ─── MARQUEE ─── */
+  .marquee-bar {
+    border-top: 1px solid rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 18px 0;
+    overflow: hidden;
+    background: rgba(201,168,76,0.03);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 60px;
+    animation: marquee 30s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+  .marquee-item span {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .marquee-dot {
+    width: 4px; height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 120px 60px; max-width: 1400px; margin: 0 auto; }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .section-label span {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .section-label-line {
+    width: 40px; height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(48px, 6vw, 88px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  /* ─── ABOUT ─── */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 120px;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+  }
+  .about-court-frame {
+    position: relative;
+    aspect-ratio: 3/4;
+    background:
+      linear-gradient(135deg, var(--green-court) 0%, #1E3D2A 60%, #0F1A13 100%);
+    overflow: hidden;
+  }
+  .about-court-lines-inner {
+    position: absolute;
+    inset: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .about-court-lines-inner::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 1px;
+    background: rgba(255,255,255,0.15);
+  }
+  .about-court-lines-inner::after {
+    content: '';
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+  .court-service-box {
+    position: absolute;
+    top: 20px; left: 20%;
+    right: 20%;
+    height: 40%;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-top: none;
+  }
+  .court-net {
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.4);
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
+  }
+  .about-court-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 50%);
+  }
+  .about-court-text {
+    position: absolute;
+    bottom: 30px; left: 30px;
+  }
+  .about-court-text .num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    opacity: 0.3;
+  }
+  .about-gold-accent {
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 120px; height: 120px;
+    border: 1px solid rgba(201,168,76,0.3);
+    pointer-events: none;
+  }
+  .about-content .section-title { margin-bottom: 32px; }
+  .about-text {
+    font-size: 15px;
+    line-height: 1.9;
+    color: rgba(247,242,232,0.65);
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid rgba(201,168,76,0.2);
+  }
+  .stat {
+    padding: 32px 0;
+    border-right: 1px solid rgba(201,168,76,0.2);
+    padding-right: 32px;
+    padding-left: 0;
+  }
+  .stat:last-child { border-right: none; padding-left: 32px; }
+  .stat:nth-child(2) { padding-left: 32px; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 8px;
+  }
+
+  /* ─── PROGRAMS ─── */
+  #programs { background: var(--dark); }
+  .programs-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+    margin-bottom: 80px;
+  }
+  .programs-intro {
+    font-size: 15px;
+    line-height: 1.8;
+    color: rgba(247,242,232,0.55);
+    font-weight: 300;
+    align-self: end;
+  }
+  .programs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .program-card {
+    background: var(--dark-3);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+    transition: all 0.4s ease;
+  }
+  .program-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  .program-card:hover { background: var(--dark-4); transform: translateY(-4px); }
+  .program-card:hover::before { transform: scaleX(1); }
+  .program-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--gold);
+    opacity: 0.5;
+    letter-spacing: 0.1em;
+    margin-bottom: 32px;
+  }
+  .program-icon {
+    width: 48px; height: 48px;
+    margin-bottom: 28px;
+    color: var(--gold);
+  }
+  .program-name {
+    font-family: 'Marcellus', serif;
+    font-size: 22px;
+    color: var(--cream);
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+  .program-desc {
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(247,242,232,0.5);
+    font-weight: 300;
+    margin-bottom: 32px;
+  }
+  .program-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .program-tag {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold);
+  }
+  .program-card.featured {
+    background: linear-gradient(135deg, var(--green-court) 0%, #1A3527 100%);
+    grid-row: span 1;
+  }
+
+  /* ─── COACHES ─── */
+  #coaches { padding-top: 0; }
+  .coaches-header { margin-bottom: 80px; }
+  .coaches-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .coach-card {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    background: var(--dark-3);
+    cursor: none;
+  }
+  .coach-card-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--dark-3) 0%, var(--dark-4) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .coach-avatar {
+    width: 80px; height: 80px;
+    border: 2px solid rgba(201,168,76,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--gold);
+    opacity: 0.4;
+  }
+  .coach-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.95) 30%, rgba(10,10,10,0.4) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 32px;
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+  }
+  .coach-card:hover .coach-card-overlay { transform: translateY(0); }
+  .coach-name {
+    font-family: 'Marcellus', serif;
+    font-size: 20px;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .coach-role {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .coach-specialty {
+    font-size: 12px;
+    color: rgba(247,242,232,0.5);
+    line-height: 1.6;
+    font-weight: 300;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease 0.1s;
+  }
+  .coach-card:hover .coach-specialty { opacity: 1; transform: translateY(0); }
+
+  /* ─── FACILITIES ─── */
+  #facilities { background: var(--dark-2); padding: 120px 0; }
+  .facilities-inner { max-width: 1400px; margin: 0 auto; padding: 0 60px; }
+  .facilities-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+    margin-top: 80px;
+  }
+  .facilities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .facility-item {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    cursor: none;
+    transition: padding-left 0.3s ease;
+  }
+  .facility-item:hover { padding-left: 16px; }
+  .facility-item:last-child { border-bottom: none; }
+  .facility-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    color: var(--gold);
+    opacity: 0.4;
+    min-width: 28px;
+  }
+  .facility-name {
+    font-family: 'Marcellus', serif;
+    font-size: 18px;
+    color: var(--cream);
+    flex: 1;
+  }
+  .facility-desc {
+    font-size: 12px;
+    color: rgba(247,242,232,0.4);
+  }
+  .facility-arrow {
+    color: var(--gold);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .facility-item:hover .facility-arrow { opacity: 1; }
+  .facilities-visual {
+    position: relative;
+  }
+  .facilities-big-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 200px;
+    font-weight: 300;
+    color: var(--green-court);
+    line-height: 1;
+    opacity: 0.2;
+    position: absolute;
+    top: -40px;
+    right: -20px;
+  }
+  .facilities-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    position: relative;
+    z-index: 1;
+  }
+  .facility-card {
+    background: var(--dark-3);
+    padding: 36px 28px;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: none;
+  }
+  .facility-card:hover { background: var(--dark-4); }
+  .facility-card-icon {
+    position: absolute;
+    top: 24px; left: 24px;
+    color: var(--gold);
+    opacity: 0.5;
+    width: 32px; height: 32px;
+  }
+  .facility-card-name {
+    font-family: 'Marcellus', serif;
+    font-size: 16px;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .facility-card-detail {
+    font-size: 11px;
+    color: rgba(247,242,232,0.4);
+    letter-spacing: 0.05em;
+  }
+  .facility-card.accent { background: linear-gradient(135deg, #1A3527 0%, #0F2318 100%); }
+
+  /* ─── SCHEDULE ─── */
+  #schedule { padding: 120px 60px; }
+  .schedule-header { margin-bottom: 64px; }
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 2px;
+  }
+  .schedule-time-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-top: 48px;
+  }
+  .time-slot {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    color: var(--gray);
+    letter-spacing: 0.1em;
+    padding-right: 16px;
+  }
+  .schedule-day-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .schedule-day-header {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .schedule-cell {
+    height: 80px;
+    background: var(--dark-3);
+    position: relative;
+    overflow: hidden;
+  }
+  .schedule-session {
+    position: absolute;
+    inset: 2px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.3s;
+    cursor: none;
+  }
+  .schedule-session:hover { filter: brightness(1.2); }
+  .schedule-session.juniors { background: rgba(45,90,61,0.7); border-left: 3px solid #4A8A5E; }
+  .schedule-session.adults { background: rgba(201,168,76,0.15); border-left: 3px solid var(--gold); }
+  .schedule-session.elite { background: rgba(100,60,160,0.2); border-left: 3px solid #9B59B6; }
+  .schedule-session.private { background: rgba(200,100,50,0.15); border-left: 3px solid #E67E22; }
+  .session-name {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--cream);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .session-info {
+    font-size: 9px;
+    color: rgba(247,242,232,0.5);
+    margin-top: 2px;
+  }
+  .schedule-legend {
+    display: flex;
+    gap: 32px;
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+  }
+
+  /* ─── LOCATION ─── */
+  #location {
+    background: var(--dark-2);
+    padding: 120px 0;
+  }
+  .location-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+  .location-map {
+    position: relative;
+    height: 500px;
+    background: var(--dark-3);
+    overflow: hidden;
+  }
+  .map-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+  }
+  .map-pin {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .pin-outer {
+    width: 60px; height: 60px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pingPulse 2s ease infinite;
+  }
+  .pin-inner {
+    width: 16px; height: 16px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  @keyframes pingPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.4); }
+    50% { box-shadow: 0 0 0 20px rgba(201,168,76,0); }
+  }
+  .map-label {
+    position: absolute;
+    bottom: 30px; left: 30px;
+    background: rgba(10,10,10,0.9);
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 20px 24px;
+  }
+  .map-label-name {
+    font-family: 'Marcellus', serif;
+    font-size: 16px;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+  .map-label-addr {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+  .location-info .section-title { margin-bottom: 40px; }
+  .location-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .location-detail {
+    display: flex;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  .location-detail:last-child { border-bottom: none; }
+  .location-detail-icon {
+    width: 40px; height: 40px;
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--gold);
+  }
+  .location-detail-content {}
+  .location-detail-label {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .location-detail-value {
+    font-family: 'Marcellus', serif;
+    font-size: 16px;
+    color: var(--cream);
+  }
+  .location-detail-sub {
+    font-size: 12px;
+    color: rgba(247,242,232,0.4);
+    margin-top: 4px;
+  }
+
+  /* ─── CTA ─── */
+  #cta {
+    text-align: center;
+    padding: 160px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 50%, rgba(45,90,61,0.2) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 60%);
+  }
+  .cta-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    position: relative;
+  }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(56px, 8vw, 110px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 48px;
+    position: relative;
+  }
+  .cta-title em { font-style: italic; color: var(--gold); }
+  .cta-sub {
+    font-size: 14px;
+    color: rgba(247,242,232,0.5);
+    font-weight: 300;
+    max-width: 400px;
+    margin: 0 auto 56px;
+    line-height: 1.8;
+    position: relative;
+  }
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    position: relative;
+  }
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 18px 48px;
+    cursor: none;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .btn-secondary:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 80px 60px 40px;
+    max-width: 100%;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 80px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .footer-brand .nav-logo { margin-bottom: 24px; display: inline-flex; }
+  .footer-brand p {
+    font-size: 13px;
+    line-height: 1.8;
+    color: rgba(247,242,232,0.4);
+    font-weight: 300;
+    max-width: 280px;
+    margin-bottom: 32px;
+  }
+  .footer-social {
+    display: flex;
+    gap: 12px;
+  }
+  .social-link {
+    width: 38px; height: 38px;
+    border: 1px solid rgba(201,168,76,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray);
+    text-decoration: none;
+    transition: all 0.3s;
+    cursor: none;
+  }
+  .social-link:hover { border-color: var(--gold); color: var(--gold); }
+  .footer-col h4 {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .footer-col ul a {
+    text-decoration: none;
+    font-size: 13px;
+    color: rgba(247,242,232,0.45);
+    transition: color 0.3s;
+    letter-spacing: 0.02em;
+    cursor: none;
+  }
+  .footer-col ul a:hover { color: var(--gold); }
+  .footer-bottom {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .footer-bottom p {
+    font-size: 11px;
+    color: rgba(247,242,232,0.25);
+    letter-spacing: 0.05em;
+  }
+  .footer-bottom .tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(201,168,76,0.4);
+  }
+
+  /* ─── MOBILE NAV TOGGLE ─── */
+  .nav-mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: none;
+    padding: 4px;
+  }
+  .nav-mobile-toggle span {
+    width: 24px; height: 1px;
+    background: var(--cream);
+    transition: all 0.3s;
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  @media (max-width: 1024px) {
+    nav { padding: 20px 32px; }
+    nav.scrolled { padding: 16px 32px; }
+    section { padding: 80px 32px; }
+    #about { grid-template-columns: 1fr; gap: 60px; }
+    .programs-grid { grid-template-columns: 1fr 1fr; }
+    .coaches-grid { grid-template-columns: 1fr 1fr; }
+    .facilities-split { grid-template-columns: 1fr; gap: 60px; }
+    .location-inner { grid-template-columns: 1fr; gap: 60px; padding: 0 32px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .nav-links, .nav-cta { display: none; }
+    .nav-mobile-toggle { display: flex; }
+    .hero-content { padding: 0 32px; }
+    .hero-badge { display: none; }
+    .hero-scroll { left: 32px; }
+    .programs-header { grid-template-columns: 1fr; }
+    #schedule { overflow-x: auto; }
+    .schedule-grid { min-width: 700px; }
+  }
+
+  @media (max-width: 640px) {
+    .hero-title { font-size: 56px; }
+    .hero-title .line-indent { padding-left: 60px; }
+    .programs-grid { grid-template-columns: 1fr; }
+    .coaches-grid { grid-template-columns: 1fr 1fr; }
+    .about-stats { grid-template-columns: 1fr; }
+    .stat { border-right: none; border-bottom: 1px solid rgba(201,168,76,0.2); padding-left: 0 !important; padding-right: 0 !important; }
+    .footer-top { grid-template-columns: 1fr; gap: 40px; }
+    .cta-buttons { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<!-- ─── NAVIGATION ─── -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="22" cy="22" r="21" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
+        <path d="M22 8 L34 20 L22 36 L10 20 Z" fill="none" stroke="#C9A84C" stroke-width="1"/>
+        <path d="M14 20 L22 12 L30 20 L22 28 Z" fill="#C9A84C" opacity="0.2"/>
+        <circle cx="22" cy="20" r="3" fill="#C9A84C"/>
+        <path d="M22 8 L22 36" stroke="#C9A84C" stroke-width="0.5" opacity="0.4"/>
+        <path d="M10 20 L34 20" stroke="#C9A84C" stroke-width="0.5" opacity="0.4"/>
+      </svg>
+    </div>
+    <div class="nav-logo-text">
+      <span class="brand">Eagles</span>
+      <span class="sub">Tennis Academy</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#coaches">Coaches</a></li>
+    <li><a href="#facilities">Facilities</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#location">Location</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Enroll Now</a>
+  <div class="nav-mobile-toggle" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <svg class="hero-court-lines" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <rect x="200" y="100" width="1040" height="700" fill="none" stroke="white" stroke-width="1"/>
+    <line x1="200" y1="450" x2="1240" y2="450" stroke="white" stroke-width="0.5"/>
+    <rect x="400" y="100" width="640" height="280" fill="none" stroke="white" stroke-width="0.5"/>
+    <rect x="400" y="520" width="640" height="280" fill="none" stroke="white" stroke-width="0.5"/>
+    <line x1="720" y1="100" x2="720" y2="800" stroke="white" stroke-width="0.5"/>
+    <circle cx="720" cy="450" r="60" fill="none" stroke="white" stroke-width="0.5"/>
+    <line x1="200" y1="446" x2="1240" y2="446" stroke="white" stroke-width="2"/>
+    <line x1="200" y1="454" x2="1240" y2="454" stroke="white" stroke-width="2"/>
+  </svg>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div</div>
+      <span></span>
+    </div>
+    <h1 class="hero-title">
+      Elevate<br>
+      <em>Your</em><br>
+      <span class="line-indent">Game</span>
+    </h1>
+    <p class="hero-desc">Where champions are cultivated. Eagles Tennis Academy delivers world-class coaching, premium facilities, and an uncompromising commitment to excellence in the heart of Riyadh.</p>
+    <div class="hero-actions">
+      <a href="#programs" class="btn-primary"><span>Explore Programs</span></a>
+      <a href="#about" class="btn-ghost">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+        Discover the Academy
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+  <div class="hero-badge">
+    <div class="hero-badge-ring"></div>
+    <div class="hero-badge-inner">
+      <div class="num">6+</div>
+      <span class="label">Courts Available</span>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-bar">
+  <div class="marquee-track">
+    <div class="marquee-item"><span>Junior Programs</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Elite Training</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Private Coaching</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Adult Classes</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Tournament Prep</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Fitness & Conditioning</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Video Analysis</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Olaya, Riyadh</span><div class="marquee-dot"></div></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="marquee-item"><span>Junior Programs</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Elite Training</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Private Coaching</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Adult Classes</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Tournament Prep</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Fitness & Conditioning</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Video Analysis</span><div class="marquee-dot"></div></div>
+    <div class="marquee-item"><span>Olaya, Riyadh</span><div class="marquee-dot"></div></div>
+  </div>
+</div>
+
+<!-- ─── ABOUT ─── -->
+<section id="about" style="max-width:1400px;">
+  <div class="about-visual reveal">
+    <div class="about-gold-accent"></div>
+    <div class="about-court-frame">
+      <div class="about-court-lines-inner">
+        <div class="court-service-box"></div>
+        <div class="court-net"></div>
+      </div>
+      <div class="about-court-overlay"></div>
+      <div class="about-court-text">
+        <div class="num">خبرة</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-content">
+    <div class="section-label reveal">
+      <div class="section-label-line"></div>
+      <span>Our Story</span>
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">The Art of<br><em>Tennis</em><br>Excellence</h2>
+    <p class="about-text reveal reveal-delay-2">Eagles Tennis Academy was founded with a singular vision: to create Riyadh's most prestigious training environment where every player — from beginner to competitor — receives coaching of the highest calibre. Nestled in the prestigious Olaya district, we combine tradition with innovation to unlock potential in every athlete.</p>
+    <div class="about-stats reveal reveal-delay-3">
+      <div class="stat">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Active Members</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Expert Coaches</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Premium Courts</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROGRAMS ─── -->
+<section id="programs" style="max-width:1400px;">
+  <div class="programs-header">
+    <div>
+      <div class="section-label reveal">
+        <div class="section-label-line"></div>
+        <span>Training Programs</span>
+      </div>
+      <h2 class="section-title reveal reveal-delay-1">Pathways to<br><em>Mastery</em></h2>
+    </div>
+    <p class="programs-intro reveal reveal-delay-2">Every program at Eagles is designed around the individual. Whether you're picking up a racket for the first time or preparing for competitive play, we have a tailored pathway for you.</p>
+  </div>
+  <div class="programs-grid reveal">
+    <div class="program-card featured">
+      <div class="program-num">01</div>
+      <svg class="program-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M24 4L44 20L24 44L4 20Z"/>
+        <circle cx="24" cy="24" r="8"/>
+      </svg>
+      <div class="program-name">Elite Performance</div>
+      <div class="program-desc">Intensive competitive training for aspiring tournament players. Advanced tactical, technical, and physical development with professional-standard coaching.</div>
+      <div class="program-tags">
+        <span class="program-tag">Ages 14–25</span>
+        <span class="program-tag">5×/week</span>
+        <span class="program-tag">Video Analysis</span>
+      </div>
+    </div>
+    <div class="program-card">
+      <div class="program-num">02</div>
+      <svg class="program-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="24" cy="12" r="8"/>
+        <path d="M8 44c0-8.837 7.163-16 16-16s16 7.163 16 16"/>
+      </svg>
+      <div class="program-name">Junior Development</div>
+      <div class="program-desc">Structured, age-appropriate training that builds fundamental skills, confidence, and a lifelong love for the game.</div>
+      <div class="program-tags">
+        <span class="program-tag">Ages 5–13</span>
+        <span class="program-tag">3–4×/week</span>
+        <span class="program-tag">Group & Individual</span>
+      </div>
+    </div>
+    <div class="program-card">
+      <div class="program-num">03</div>
+      <svg class="program-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="6" y="6" width="36" height="36" rx="4"/>
+        <path d="M6 20h36M20 6v36"/>
+      </svg>
+      <div class="program-name">Adult Academy</div>
+      <div class="program-desc">Flexible group sessions and private lessons for adults at all levels. Play, improve, and connect with Riyadh's most passionate tennis community.</div>
+      <div class="program-tags">
+        <span class="program-tag">18+</span>
+        <span class="program-tag">Morning & Evening</span>
+        <span class="program-tag">All Levels</span>
+      </div>
+    </div>
+    <div class="program-card">
+      <div class="program-num">04</div>
+      <svg class="program-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M24 4 L44 24 L24 44 L4 24 Z"/>
+        <path d="M12 24 L24 12 L36 24 L24 36 Z"/>
+      </svg>
+      <div class="program-name">Private Coaching</div>
+      <div class="program-desc">One-on-one sessions fully tailored to your goals. Accelerate your development with undivided expert attention.</div>
+      <div class="program-tags">
+        <span class="program-tag">All Ages</span>
+        <span class="program-tag">Flexible Booking</span>
+        <span class="program-tag">1-on-1</span>
+      </div>
+    </div>
+    <div class="program-card">
+      <div class="program-num">05</div>
+      <svg class="program-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M8 40 L8 24 L24 8 L40 24 L40 40"/>
+        <rect x="18" y="28" width="12" height="12"/>
+      </svg>
+      <div class="program-name">Holiday Camps</div>
+      <div class="program-desc">Immersive multi-day tennis camps during school holidays. Fun, competitive, and educational environments for young players.</div>
+      <div class="program-tags">
+        <span class="program-tag">Ages 6–16</span>
+        <span class="program-tag">Seasonal</span>
+        <span class="program-tag">Full Day</span>
+      </div>
+    </div>
+    <div class="program-card">
+      <div class="program-num">06</div>
+      <svg class="program-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M24 4 C14 14 10 28 24 44 C38 28 34 14 24 4Z"/>
+        <path d="M12 26 L36 26"/>
+      </svg>
+      <div class="program-name">Fitness & Conditioning</div>
+      <div class="program-desc">Sport-specific physical training to build the strength, agility, and endurance required to excel on court.</div>
+      <div class="program-tags">
+        <span class="program-tag">All Ages</span>
+        <span class="program-tag">Off-Court</span>
+        <span class="program-tag">Performance</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COACHES ─── -->
+<section id="coaches" style="max-width:1400px; padding-top:0; padding-bottom:120px;">
+  <div class="coaches-header">
+    <div class="section-label reveal">
+      <div class="section-label-line"></div>
+      <span>Our Team</span>
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">World-Class<br><em>Coaching</em> Staff</h2>
+  </div>
+  <div class="coaches-grid reveal">
+    <div class="coach-card">
+      <div class="coach-card-bg"><div class="coach-avatar">A</div></div>
+      <div class="coach-card-overlay">
+        <div class="coach-name">Coach Ahmed Al-Rashid</div>
+        <div class="coach-role">Head Coach & Director</div>
+        <div class="coach-specialty">Former ATP-ranked professional with 18 years of elite coaching experience. Specialises in advanced technical development and match strategy.</div>
+      </div>
+    </div>
+    <div class="coach-card">
+      <div class="coach-card-bg"><div class="coach-avatar">S</div></div>
+      <div class="coach-card-overlay">
+        <div class="coach-name">Coach Sara Al-Mutairi</div>
+        <div class="coach-role">Junior Programme Lead</div>
+        <div class="coach-specialty">ITF-certified coach dedicated to youth development. Passionate about building fundamentals through engaging, age-appropriate training.</div>
+      </div>
+    </div>
+    <div class="coach-card">
+      <div class="coach-card-bg"><div class="coach-avatar">K</div></div>
+      <div class="coach-card-overlay">
+        <div class="coach-name">Coach Khalid Hassan</div>
+        <div class="coach-role">Performance & Fitness</div>
+        <div class="coach-specialty">Sport science specialist with expertise in athletic conditioning tailored specifically for competitive tennis players.</div>
+      </div>
+    </div>
+    <div class="coach-card">
+      <div class="coach-card-bg"><div class="coach-avatar">N</div></div>
+      <div class="coach-card-overlay">
+        <div class="coach-name">Coach Nour Al-Faisal</div>
+        <div class="coach-role">Elite & Tournament Prep</div>
+        <div class="coach-specialty">Competitive player analyst and tournament preparation specialist. Brings international tournament experience to every session.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FACILITIES ─── -->
+<div id="facilities">
+  <div class="facilities-inner">
+    <div class="section-label reveal">
+      <div class="section-label-line"></div>
+      <span>The Complex</span>
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">Premium<br><em>Facilities</em></h2>
+    <div class="facilities-split">
+      <div class="facilities-list reveal">
+        <div class="facility-item">
+          <div class="facility-num">01</div>
+          <div class="facility-name">Clay & Hard Courts</div>
+          <div class="facility-desc">International Standard</div>
+          <svg class="facility-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </div>
+        <div class="facility-item">
+          <div class="facility-num">02</div>
+          <div class="facility-name">Floodlit Night Courts</div>
+          <div class="facility-desc">Full Evening Play</div>
+          <svg class="facility-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </div>
+        <div class="facility-item">
+          <div class="facility-num">03</div>
+          <div class="facility-name">Pro Shop</div>
+          <div class="facility-desc">Equipment & Apparel</div>
+          <svg class="facility-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </div>
+        <div class="facility-item">
+          <div class="facility-num">04</div>
+          <div class="facility-name">Lounge & Viewing Area</div>
+          <div class="facility-desc">Parent & Spectator Zone</div>
+          <svg class="facility-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </div>
+        <div class="facility-item">
+          <div class="facility-num">05</div>
+          <div class="facility-name">Fitness Studio</div>
+          <div class="facility-desc">Sports-Specific Conditioning</div>
+          <svg class="facility-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </div>
+        <div class="facility-item">
+          <div class="facility-num">06</div>
+          <div class="facility-name">Video Analysis Suite</div>
+          <div class="facility-desc">High-Speed Camera Technology</div>
+          <svg class="facility-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </div>
+      </div>
+      <div class="facilities-visual reveal reveal-delay-2">
+        <div class="facilities-big-num">6</div>
+        <div class="facilities-cards">
+          <div class="facility-card accent">
+            <svg class="facility-card-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="4" y="4" width="24" height="24" rx="2"/>
+              <line x1="4" y1="16" x2="28" y2="16"/>
+              <line x1="16" y1="4" x2="16" y2="28"/>
+            </svg>
+            <div class="facility-card-name">6 Courts</div>
+            <div class="facility-card-detail">Clay & Hard Surface</div>
+          </div>
+          <div class="facility-card">
+            <svg class="facility-card-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="16" cy="16" r="12"/>
+              <path d="M16 8v8l6 4"/>
+            </svg>
+            <div class="facility-card-name">Extended Hours</div>
+            <div class="facility-card-detail">6 AM – 11 PM</div>
+          </div>
+          <div class="facility-card">
+            <svg class="facility-card-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M16 4 L28 14 L28 28 L4 28 L4 14 Z"/>
+              <rect x="12" y="20" width="8" height="8"/>
+            </svg>
+            <div class="facility-card-name">Pro Shop</div>
+            <div class="facility-card-detail">Stringing Service</div>
+          </div>
+          <div class="facility-card accent">
+            <svg class="facility-card-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="4" y="8" width="24" height="16" rx="2"/>
+              <path d="M12 8V6M20 8V6M8 24v2M24 24v2"/>
+            </svg>
+            <div class="facility-card-name">Video Analysis</div>
+            <div class="facility-card-detail">4K Technology</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SCHEDULE ─── -->
+<section id="schedule" style="max-width:1400px;">
+  <div class="schedule-header">
+    <div class="section-label reveal">
+      <div class="section-label-line"></div>
+      <span>Weekly Schedule</span>
+    </div>
+    <h2 class="section-title reveal reveal-delay-1">Training<br><em>Timetable</em></h2>
+  </div>
+  <div class="schedule-grid reveal">
+    <div class="schedule-time-col">
+      <div class="time-slot">07:00</div>
+      <div class="time-slot">09:00</div>
+      <div class="time-slot">11:00</div>
+      <div class="time-slot">16:00</div>
+      <div class="time-slot">18:00</div>
+      <div class="time-slot">20:00</div>
+    </div>
+    <!-- Sunday -->
+    <div class="schedule-day-col">
+      <div class="schedule-day-header">Sun</div>
+      <div class="schedule-cell"><div class="schedule-session juniors"><div class="session-name">Junior Dev</div><div class="session-info">Ages 6–10</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session adults"><div class="session-name">Adult Group</div><div class="session-info">Intermediate</div></div></div>
+      <div class="schedule-cell"></div>
+      <div class="schedule-cell"><div class="schedule-session elite"><div class="session-name">Elite Squad</div><div class="session-info">Advanced</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session private"><div class="session-name">Private</div><div class="session-info">By appt.</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session adults"><div class="session-name">Adult Play</div><div class="session-info">Social</div></div></div>
+    </div>
+    <!-- Monday -->
+    <div class="schedule-day-col">
+      <div class="schedule-day-header">Mon</div>
+      <div class="schedule-cell"><div class="schedule-session elite"><div class="session-name">Elite AM</div><div class="session-info">Performance</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session juniors"><div class="session-name">Juniors</div><div class="session-info">Ages 10–14</div></div></div>
+      <div class="schedule-cell"></div>
+      <div class="schedule-cell"><div class="schedule-session juniors"><div class="session-name">Junior Dev</div><div class="session-info">Ages 6–10</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session elite"><div class="session-name">Elite Squad</div><div class="session-info">Tactics</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session adults"><div class="session-name">Adults</div><div class="session-info">Beginners</div></div></div>
+    </div>
+    <!-- Tuesday -->
+    <div class="schedule-day-col">
+      <div class="schedule-day-header">Tue</div>
+      <div class="schedule-cell"><div class="schedule-session adults"><div class="session-name">Ladies Club</div><div class="session-info">All levels</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session private"><div class="session-name">Private</div><div class="session-info">By appt.</div></div></div>
+      <div class="schedule-cell"></div>
+      <div class="schedule-cell"><div class="schedule-session elite"><div class="session-name">Elite Fitness</div><div class="session-info">Conditioning</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session juniors"><div class="session-name">Junior Dev</div><div class="session-info">Ages 10–14</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session adults"><div class="session-name">Adult Social</div><div class="session-info">Mixed</div></div></div>
+    </div>
+    <!-- Wednesday -->
+    <div class="schedule-day-col">
+      <div class="schedule-day-header">Wed</div>
+      <div class="schedule-cell"><div class="schedule-session elite"><div class="session-name">Elite AM</div><div class="session-info">Match play</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session adults"><div class="session-name">Adult Drill</div><div class="session-info">Intermediate</div></div></div>
+      <div class="schedule-cell"></div>
+      <div class="schedule-cell"><div class="schedule-session juniors"><div class="session-name">Juniors</div><div class="session-info">Tournament</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session private"><div class="session-name">Private</div><div class="session-info">By appt.</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session elite"><div class="session-name">Elite PM</div><div class="session-info">Strategy</div></div></div>
+    </div>
+    <!-- Thursday -->
+    <div class="schedule-day-col">
+      <div class="schedule-day-header">Thu</div>
+      <div class="schedule-cell"><div class="schedule-session adults"><div class="session-name">Ladies Club</div><div class="session-info">Advanced</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session juniors"><div class="session-name">Junior Dev</div><div class="session-info">Ages 6–10</div></div></div>
+      <div class="schedule-cell"></div>
+      <div class="schedule-cell"><div class="schedule-session elite"><div class="session-name">Elite Squad</div><div class="session-info">Full session</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session adults"><div class="session-name">Adults</div><div class="session-info">Intermediate</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session adults"><div class="session-name">Night Rally</div><div class="session-info">Open play</div></div></div>
+    </div>
+    <!-- Friday -->
+    <div class="schedule-day-col">
+      <div class="schedule-day-header">Fri</div>
+      <div class="schedule-cell"></div>
+      <div class="schedule-cell"><div class="schedule-session adults"><div class="session-name">Morning Club</div><div class="session-info">Social</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session private"><div class="session-name">Private</div><div class="session-info">By appt.</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session juniors"><div class="session-name">Weekend Junior</div><div class="session-info">All ages</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session adults"><div class="session-name">Family Tennis</div><div class="session-info">Fun play</div></div></div>
+      <div class="schedule-cell"><div class="schedule-session elite"><div class="session-name">Elite Match</div><div class="session-info">Competitive</div></div></div>
+    </div>
+  </div>
+  <div class="schedule-legend reveal">
+    <div class="legend-item"><div class="legend-dot" style="background:#4A8A5E;"></div>Junior Programs</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#C9A84C;"></div>Adult Classes</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#9B59B6;"></div>Elite Squad</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#E67E22;"></div>Private Coaching</div>
+  </div>
+</section>
+
+<!-- ─── LOCATION ─── -->
+<div id="location">
+  <div class="location-inner">
+    <div class="location-map reveal">
+      <svg class="map-grid" viewBox="0 0 600 500" fill="none">
+        <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#C9A84C" stroke-width="0.5"/></pattern></defs>
+        <rect width="600" height="500" fill="url(#grid)"/>
+        <!-- Street representation -->
+        <rect x="100" y="0" width="30" height="500" fill="#C9A84C" opacity="0.08"/>
+        <rect x="300" y="0" width="20" height="500" fill="#C9A84C" opacity="0.05"/>
+        <rect x="0" y="150" width="600" height="25" fill="#C9A84C" opacity="0.08"/>
+        <rect x="0" y="320" width="600" height="20" fill="#C9A84C" opacity="0.05"/>
+        <!-- Buildings -->
+        <rect x="140" y="50" width="140" height="80" fill="#C9A84C" opacity="0.05" rx="2"/>
+        <rect x="340" y="50" width="200" height="100" fill="#C9A84C" opacity="0.05" rx="2"/>
+        <rect x="140" y="190" width="120" height="100" fill="#C9A84C" opacity="0.05" rx="2"/>
+        <rect x="140" y="360" width="180" height="100" fill="#C9A84C" opacity="0.05" rx="2"/>
+        <rect x="360" y="360" width="180" height="100" fill="#C9A84C" opacity="0.05" rx="2"/>
+        <!-- Academy location -->
+        <rect x="310" y="190" width="200" height="100" fill="#2D5A3D" opacity="0.4" rx="2"/>
+        <!-- Tennis court lines -->
+        <rect x="325" y="205" width="60" height="40" fill="none" stroke="#C9A84C" stroke-width="1" opacity="0.5"/>
+        <line x1="355" y1="205" x2="355" y2="245" stroke="#C9A84C" stroke-width="0.5" opacity="0.5"/>
+        <line x1="325" y1="225" x2="385" y2="225" stroke="#C9A84C" stroke-width="1" opacity="0.5"/>
+        <!-- Pin location -->
+        <circle cx="410" cy="230" r="20" fill="#C9A84C" opacity="0.2"/>
+        <circle cx="410" cy="230" r="8" fill="#C9A84C" opacity="0.8"/>
+      </svg>
+      <div class="map-pin">
+        <div class="pin-outer"><div class="pin-inner"></div></div>
+      </div>
+      <div class="map-label">
+        <div class="map-label-name">Eagles Tennis Academy</div>
+        <div class="map-label-addr">Olaya District, Riyadh</div>
+      </div>
+    </div>
+    <div class="location-info reveal reveal-delay-1">
+      <div class="section-label">
+        <div class="section-label-line"></div>
+        <span>Find Us</span>
+      </div>
+      <h2 class="section-title">Visit the<br><em>Academy</em></h2>
+      <div class="location-details" style="margin-top:48px;">
+        <div class="location-detail">
+          <div class="location-detail-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </div>
+          <div class="location-detail-content">
+            <div class="location-detail-label">Address</div>
+            <div class="location-detail-value">Eagles Tennis Academy</div>
+            <div class="location-detail-sub">Olaya District, Riyadh, Saudi Arabia</div>
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="location-detail-content">
+            <div class="location-detail-label">Opening Hours</div>
+            <div class="location-detail-value">6:00 AM – 11:00 PM</div>
+            <div class="location-detail-sub">Sunday through Friday · Saturday by arrangement</div>
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.86 12a19.79 19.79 0 01-3.07-8.67A2 2 0 012.77 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.84a16 16 0 006.29 6.29l1.21-1.21a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7a2 2 0 011.72 2z"/></svg>
+          </div>
+          <div class="location-detail-content">
+            <div class="location-detail-label">Phone & WhatsApp</div>
+            <div class="location-detail-value">+966 XX XXX XXXX</div>
+            <div class="location-detail-sub">Enquiries, bookings & memberships</div>
+          </div>
+        </div>
+        <div class="location-detail">
+          <div class="location-detail-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="location-detail-content">
+            <div class="location-detail-label">Email</div>
+            <div class="location-detail-value">info@eaglestennis.sa</div>
+            <div class="location-detail-sub">We respond within 24 hours</div>
+          </div>
+        </div>
+      </div>
+      <a href="https://www.google.com/maps/place/Eagles+tennis+Academy+Olaya" target="_blank" class="btn-primary" style="margin-top:40px; display:inline-block;"><span>Get Directions →</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- ─── CTA ─── -->
+<section id="cta" style="max-width:100%; padding:160px 60px;">
+  <p class="cta-eyebrow reveal">Begin Your Journey</p>
+  <h2 class="cta-title reveal reveal-delay-1">
+    Fly Higher.<br>
+    Play <em>Bolder.</em>
+  </h2>
+  <p class="cta-sub reveal reveal-delay-2">Join hundreds of players who have elevated their game at Eagles. Register today and take the first step towards excellence.</p>
+  <div class="cta-buttons reveal reveal-delay-3">
+    <a href="#programs" class="btn-primary"><span>Enroll Now</span></a>
+    <a href="#location" class="btn-secondary">Book a Trial Session</a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="21" stroke="#C9A84C" stroke-width="0.8" opacity="0.6"/>
+            <path d="M22 8 L34 20 L22 36 L10 20 Z" fill="none" stroke="#C9A84C" stroke-width="1"/>
+            <path d="M14 20 L22 12 L30 20 L22 28 Z" fill="#C9A84C" opacity="0.2"/>
+            <circle cx="22" cy="20" r="3" fill="#C9A84C"/>
+          </svg>
+        </div>
+        <div class="nav-logo-text">
+          <span class="brand">Eagles</span>
+          <span class="sub">Tennis Academy</span>
+        </div>
+      </a>
+      <p>Riyadh's premier tennis academy. Developing champions, building character, and cultivating a passion for tennis in the heart of Olaya.</p>
+      <div class="footer-social">
+        <a href="#" class="social-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+        </a>
+        <a href="#" class="social-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+        </a>
+        <a href="#" class="social-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 2H3v16h5v4l4-4h5l4-4V2z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Academy</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#coaches">Our Coaches</a></li>
+        <li><a href="#facilities">Facilities</a></li>
+        <li><a href="#">News & Results</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Programs</h4>
+      <ul>
+        <li><a href="#programs">Junior Development</a></li>
+        <li><a href="#programs">Elite Performance</a></li>
+        <li><a href="#programs">Adult Academy</a></li>
+        <li><a href="#programs">Private Coaching</a></li>
+        <li><a href="#programs">Holiday Camps</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#location">Find Us</a></li>
+        <li><a href="#">Book a Session</a></li>
+        <li><a href="#">Membership Enquiry</a></li>
+        <li><a href="#">WhatsApp Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Eagles Tennis Academy, Olaya, Riyadh. All rights reserved.</p>
+    <p class="tagline">"Soar above the rest."</p>
+  </div>
+</footer>
+
+<script>
+  // Custom Cursor
+  const cursor = document.getElementById('cursor');
+  const follower = document.getElementById('cursorFollower');
+  let mouseX = 0, mouseY = 0, followerX = 0, followerY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  function animateFollower() {
+    followerX += (mouseX - followerX) * 0.12;
+    followerY += (mouseY - followerY) * 0.12;
+    follower.style.left = followerX + 'px';
+    follower.style.top = followerY + 'px';
+    requestAnimationFrame(animateFollower);
+  }
+  animateFollower();
+
+  document.querySelectorAll('a, button, .program-card, .coach-card, .facility-item, .facility-card').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+  });
+
+  // Navbar scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Mobile menu
+  function toggleMenu() {
+    const links = document.querySelector('.nav-links');
+    const cta = document.querySelector('.nav-cta');
+    if (links) {
+      const isOpen = links.style.display === 'flex';
+      links.style.display = isOpen ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '80px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = 'rgba(10,10,10,0.97)';
+      links.style.padding = '24px 32px';
+      links.style.gap = '24px';
+      links.style.borderBottom = '1px solid rgba(201,168,76,0.2)';
+      if (cta) cta.style.display = isOpen ? 'none' : 'block';
+    }
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  // Counter animation
+  function animateCounter(el) {
+    const target = parseInt(el.textContent);
+    if (isNaN(target)) return;
+    let current = 0;
+    const step = target / 60;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) { el.textContent = target + (el.dataset.suffix || ''); clearInterval(timer); }
+      else el.textContent = Math.floor(current) + (el.dataset.suffix || '');
+    }, 16);
+  }
+
+  const statObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.stat-num').forEach(animateCounter);
+        statObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.about-stats').forEach(el => statObserver.observe(el));
+</script>
+</body>
+</html>
